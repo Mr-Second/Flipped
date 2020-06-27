@@ -22,7 +22,7 @@ type UserInfoTable struct {
 	Email      string `sql:"email"`
 	Photo      string `sql:"photo"`
 	RealName   string `sql:"realName"`
-	Profession string `sql:"profession"`
+	Profession string `sql:"professional"`
 	Age        int    `sql:"age"`
 	Region     string `sql:"region"`
 	Hobby      string `sql:"hobby"`
@@ -47,7 +47,7 @@ func MakeUserInfoStruct(data *map[string]string) (*UserInfoTable, error) {
 	userInfo.Email = (*data)["email"]
 	userInfo.Photo = (*data)["photo"]
 	userInfo.RealName = (*data)["realName"]
-	userInfo.Profession = (*data)["profession"]
+	userInfo.Profession = (*data)["professional"]
 	integer, err = strconv.Atoi((*data)["age"])
 	if err != nil {
 		fmt.Println(err.Error())

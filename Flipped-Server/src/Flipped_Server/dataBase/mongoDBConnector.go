@@ -72,7 +72,7 @@ func InitializeMongoDB() {
 			"function": "InitializeMongoDB",
 			"cause":    "login mongodb",
 		}).Error(err.Error())
-		return
+		panic(err.Error())
 	}
 	currentDB = session.DB("im")
 	currentCollection = currentDB.C(collectionName)
@@ -118,20 +118,11 @@ func AddFriend(sourceUser string, targetUser string) error {
 		return errors.New("can't add a friend that already is your friend or add yourself friend")
 	}
 	selector := bson.M{"sourceUser": sourceUser}
-	if len(friendList) != 0 {
-		data := bson.M{"$push": bson.M{"friendList": targetUser}}
-		err := currentCollection.Update(selector, data)
-		if err != nil {
-			logger.SetToLogger(logrus.ErrorLevel, "AddFriend", "update friends of User: "+sourceUser, err.Error())
-			return err
-		}
-	} else {
-		newFriendPair := friendMap{SourceUser: sourceUser, FriendList: []string{targetUser}}
-		err := currentCollection.Insert(newFriendPair)
-		if err != nil {
-			logger.SetToLogger(logrus.ErrorLevel, "AddFriend", "insert into mongodb", err.Error())
-			return err
-		}
+	data := bson.M{"$push": bson.M{"friendList": targetUser}}
+	err = currentCollection.Update(selector, data)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "AddFriend", "update friends of User: "+sourceUser, err.Error())
+		return err
 	}
 	return nil
 }

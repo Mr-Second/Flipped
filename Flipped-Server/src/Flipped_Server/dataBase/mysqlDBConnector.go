@@ -175,7 +175,7 @@ func rowsMapper(rows *sql.Rows) []*UserInfoTable {
 }
 
 func SelectSimilarUser(username string) (*UserInfoTable, error) {
-	SQL := "Select * From im.userinfo Order By Rand() Limit 20"
+	SQL := "Select * From im.userinfo Order By Rand() Limit 5"
 	currentUser, err := FindUserInfo(username, "")
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "SelectSimilarUser", "to find user by username: "+username, err.Error())
@@ -215,7 +215,6 @@ func FindUserInfo(username string, pwd string) (*UserInfoTable, error) {
 	} else {
 		SQL += ";"
 	}
-	fmt.Println(SQL)
 	data := ExecSelectSQL(SQL)
 	if data == nil || len(data) != 1 {
 		return nil, errors.New("the data you select is nil or has repetitive")

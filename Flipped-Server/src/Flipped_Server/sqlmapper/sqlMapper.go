@@ -17,7 +17,7 @@ import (
 
 //包内全局字符串列表，将tag分类，在stringAttr内的tag表示其字段为字符串，在intAttr内的tag表示器字段为整型
 var (
-	stringAttr    = [...]string{"pid", "username", "photo", "password", "email", "realName", "profession", "region", "hobby"}
+	stringAttr    = [...]string{"pid", "username", "photo", "password", "email", "realName", "professional", "region", "hobby"}
 	intAttr       = [...]string{"user_type", "age"}
 	stringDefault = ""
 	intDefault    = 1000

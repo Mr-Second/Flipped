@@ -79,13 +79,12 @@ func Image2Base64(imagePath string) (string, error) {
 	if !Exists(imagePath) {
 		return "", errors.New("image doesn't exist")
 	}
-	_, imageName := filepath.Split(imagePath)
-	imageType := path.Ext(imageName)[1:]
+	_, _ = filepath.Split(imagePath)
 	imageBytes, err := ioutil.ReadFile(imagePath)
 	if err != nil {
 		return "", err
 	}
-	imageStr := "data:image/" + imageType + ";base64," + base64.StdEncoding.EncodeToString(imageBytes)
+	imageStr := base64.StdEncoding.EncodeToString(imageBytes)
 	return imageStr, nil
 }
 
